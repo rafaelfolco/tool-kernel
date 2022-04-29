@@ -191,11 +191,13 @@ for subtool in `echo $subtools | sed -e 's/,/ /g'`; do
             touch kerneltools-pids.txt
             ;;
         rt-trace-bpf)
+            set -x
             echo "Starting rt-trace-bpf"
-            nohup python3 /root/rt-trace-bpf/rt-trace-bcc.py -c ${WORLOAD_CPUS} -b -s > rt-trace-bpf-stdout.txt 2>rt-trace-bpf-stderr.txt &
+            nohup python3 /root/rt-trace-bpf/rt-trace-bcc.py -c ${WORKLOAD_CPUS} -b -s > rt-trace-bpf-stdout.txt 2>rt-trace-bpf-stderr.txt &
             rt_trace_pid=$!
             echo "rt-trace-bpf pid is $rt_trace_pid"
             echo "$rt_trace_pid" >>kerneltools-pids.txt
+            set +x
             ;;
        *)
             echo "Invalid subtool: $subtool"
